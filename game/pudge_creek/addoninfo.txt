@@ -1,0 +1,11 @@
+"AddonInfo"
+{
+  "maps"          "pudge_creek"
+  "IsPlayable"    "1"
+  "TeamCount"     "2"
+
+  "pudge_creek"
+  {
+      "MaxPlayers"                    "6"
+  }
+}

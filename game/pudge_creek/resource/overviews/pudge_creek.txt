@@ -1,0 +1,8 @@
+pudge_creek
+{
+	material materials/overviews/pudge_creek.vmat
+	pos_x -6244
+	pos_y 7138
+	scale 11.620
+}
+

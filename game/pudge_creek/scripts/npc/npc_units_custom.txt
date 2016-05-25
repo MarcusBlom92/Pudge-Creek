@@ -1,0 +1,46 @@
+// Units File
+"DOTAUnits"
+{
+	"Version"	"1"
+
+	//Dummy units placed to give vision on certain points of the map
+	"npc_vision_unit"
+	{
+		// General
+
+		"BaseClass"       "npc_dota_base_additive"  // Class of entity of link to.
+		"Model"           "models/development/invisiblebox.vmdl"  // Model.
+		"SoundSet"        "Creep_Good_Range"          // Name of sound set.
+		"Level"           "0"
+		"UnitLabel"       "healing_ward"
+
+		//abilities
+
+		"Ability1"          "vision_unit"     // Ability 1.
+
+		"VisionDaytimeRange" 	"600"
+		"VisionNighttimeRange" 	"600"
+
+	 }
+
+	 "npc_vision_unit_pudge"
+ 		{
+	 		// General
+
+	 		"BaseClass"       "npc_dota_base_additive"  // Class of entity of link to.
+	 		"Model"           "models/development/invisiblebox.vmdl"  // Model.
+	 		"SoundSet"        "Creep_Good_Range"          // Name of sound set.
+	 		"Level"           "0"
+	 		"UnitLabel"       "healing_ward"
+
+	 		//abilities
+
+	 		"Ability1"          "vision_unit"     // Ability 1.
+
+			"VisionDaytimeRange" 	"850"
+			"VisionNighttimeRange" 	"850"
+
+ 	 	}
+
+
+}
