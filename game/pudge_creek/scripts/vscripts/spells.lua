@@ -11,10 +11,6 @@ function Hunger(keys)
 
     --local dps = keys.ability:GetSpecialValueFor("dot_damage") / 10
 
-    PrintTable(keys)
-
-    print(dps)
-
     --if caster:GetHealth() == 1 then
         local damageTable =
         {

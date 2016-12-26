@@ -132,13 +132,15 @@ function PudgeCreek:InitGameMode()
 	ListenToGameEvent('game_rules_state_change',Dynamic_Wrap(PudgeCreek,'OnGameStateChange'),self);
 	ListenToGameEvent( "dota_holdout_revive_complete", Dynamic_Wrap( PudgeCreek, 'OnHoldoutReviveComplete' ), self )
 
+	GameMode:SetCustomGameForceHero("npc_dota_hero_wisp")
+
 end
 
 function PudgeCreek:OnGameStateChange(keys)
 
 	local state = GameRules:State_Get()
 
-
+  PrintTable(keys)
 
 	if state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		--Assign heroes to player based on their selected team.
@@ -153,12 +155,20 @@ function PudgeCreek:OnGameStateChange(keys)
 
 					local hero
 
+					local prevHero = player:GetAssignedHero()
+
+          local playerId = player:GetPlayerID()
+
 					local team = player:GetTeam()
 					if team then
 						if team == DOTA_TEAM_BADGUYS then -- create pudge
 
 							PUDGE = player
-							hero = CreateHeroForPlayer('npc_dota_hero_pudge', player)
+							hero = PlayerResource:ReplaceHeroWith(playerId,'npc_dota_hero_pudge', 0,0)
+
+							if(prevHero ~= nil) then
+							  prevHero:RemoveSelf()
+							end
 
 							hero:SetGold(0, false)
 						  hero:SetAbilityPoints(0)
@@ -182,7 +192,13 @@ function PudgeCreek:OnGameStateChange(keys)
 
 							local hero_name = "npc_dota_hero_" .. HeroSelector:GetRandomHeroName()
 
-							hero = CreateHeroForPlayer(hero_name, player);
+							hero = PlayerResource:ReplaceHeroWith(playerId,hero_name, 0,0)
+
+							if(prevHero ~= nil) then
+							  prevHero:RemoveSelf()
+							end
+
+
 							SURVIVORS = SURVIVORS + 1;
 							print("Setting up hero attributes")
 							hero:SetGold(0, false)
@@ -229,6 +245,8 @@ function PudgeCreek:OnEntityKilled(keys)
 		local killedEntity = EntIndexToHScript(keys.entindex_killed)
 		local attackerEntity = EntIndexToHScript(keys.entindex_attacker)
 
+		print('Pudge Creek: OnEntityKilled')
+
 			if (killedEntity ~= nil) and (killedEntity:IsRealHero() == true) then
 				-- If a survivor has died
 				if (killedEntity:GetTeam() == DOTA_TEAM_GOODGUYS)  then
@@ -238,7 +256,6 @@ function PudgeCreek:OnEntityKilled(keys)
 						-- Create tombstone on pudges location.
 						-- The player will die instantly when connecting with the hook,
 						-- however the body will move towards pudge.
-
 						local tombstoneLocation = attackerEntity:GetAbsOrigin()
 						local newItem = CreateItem( "item_tombstone", killedEntity, killedEntity )
 						newItem:SetPurchaseTime( 0 )
